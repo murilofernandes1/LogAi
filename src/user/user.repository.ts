@@ -1,26 +1,37 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../core/prisma/prisma.service.js';
-import { Role, UserRoles } from '../types/user.types.js';
+import { UserResponse, UserRoles } from '../types/user.types.js';
+import { UserInterface } from './user.interface.js';
 
 @Injectable()
-export class UserRepository {
+export class UserRepository implements UserInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async updateUserRole(id: string, role: UserRoles) {
-    const updatedUser = await this.prisma.user.update({
+  async getMe(id: string): Promise<UserResponse> {
+    const user = await this.prisma.user.findUnique({
       where: { id },
-      data: {
-        role: role.role,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
       },
     });
-    return updatedUser;
+
+    return user as unknown as UserResponse;
   }
 
-  async getMe(id: string) {
-    const me = await this.prisma.user.findUnique({
+  async updateUserRole(id: string, role: UserRoles): Promise<UserResponse> {
+    const updatedUser = await this.prisma.user.update({
       where: { id },
-      omit: { password: true },
+      data: { role },
     });
-    return me;
+
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role as UserRoles,
+    };
   }
 }

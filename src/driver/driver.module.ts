@@ -26,5 +26,6 @@ import { CryptoModule } from '../core/crypto/crypto.module.js';
     DriverRepository,
   ],
   controllers: [DriverController],
+  exports: [DriverService, 'IDriverRepository'],
 })
 export class DriverModule {}
