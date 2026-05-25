@@ -11,7 +11,7 @@ import { jwtConstants } from '../constants/jwt.contants.js';
 export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
-  private extractTokenFromHeader(request: Request): string | undefined {
+  private extractTokenFromHeader(request: any): string | undefined {
     //Spliting bearer
     const [type, token] = request.headers['authorization']?.split(' ');
     return type === 'Bearer' ? token : undefined;

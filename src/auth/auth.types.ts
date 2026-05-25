@@ -9,9 +9,9 @@ export type SignInDTO = {
   password: string;
 };
 
-export class UserResponse {
+export type UserResponse = {
   id: string;
   name: string;
   email: string;
   password: string;
-}
+};

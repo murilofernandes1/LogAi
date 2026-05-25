@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -13,11 +13,70 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      String   @default("USER")
+  role      String   @default("ADMIN")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Track {
-  id String @id @default(ulid())
+model Driver {
+  id           String  @id @default(ulid())
+  name         String
+  email        String  @unique
+  password     String
+  status       String? @default("ACTIVE")
+  licensePlate String?
+  phone        Int     @unique
+
+  deliveries Delivery[]
+  routes     Route[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Delivery {
+  id             String   @id @default(ulid())
+  recipientName  String
+  recipientPhone Int
+  address        String
+  city           String
+  zipCode        Int
+  weight         Float
+  notes          Int
+  status         String   @default("PENDING")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+
+  // DRIVER RELATION
+  driverId String
+  driver   Driver @relation(fields: [driverId], references: [id])
+
+  // ROUTE RELATION
+  routeId String
+  route   Route  @relation(fields: [routeId], references: [id])
+
+  // OWN HISTORY RELATION
+  deliveryHistory DeliveryHistory[]
+}
+
+model DeliveryHistory {
+  id         String   @id @default(uuid())
+  deliveryId String
+  delivery   Delivery @relation(fields: [deliveryId], references: [id])
+  notes      String?
+
+  ocurrenceDescription String?
+
+  createdAt DateTime @default(now())
+}
+
+model Route {
+  id     String @id @default(uuid())
+  status String
+
+  driverId   String
+  driver     Driver     @relation(fields: [driverId], references: [id])
+  deliveries Delivery[]
+
+  createdAt DateTime @default(now())
 }

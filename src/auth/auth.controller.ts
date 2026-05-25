@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import type { SignUpDTO, SignInDTO, UserResponse } from './auth.types.js';
 import { AuthService } from './auth.service.js';
-import { AuthGuard } from './auth.guard.js';
+import { AuthGuard } from '../guards/auth.guard.js';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +26,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('me')
   async me(@Request() request) {
-    return request.user;
+    return request.user.id;
   }
 }
