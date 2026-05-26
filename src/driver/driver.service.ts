@@ -33,4 +33,25 @@ export class DriverService {
 
     return newDriver;
   }
+
+  async getDriver(id: string) {
+    if (!id) {
+      throw new Error('Id not provided.');
+    }
+    const driver = await this.driverInterface.seeDriver(id);
+
+    if (!driver) {
+      throw new Error('Driver not found.');
+    }
+    return driver;
+  }
+
+  async allDrivers() {
+    const drivers = await this.driverInterface.allDrivers();
+    if (!drivers) {
+      return null;
+    }
+
+    return drivers;
+  }
 }

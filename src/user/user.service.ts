@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { Role, UserResponse } from '../types/user.types.js';
+import type { UserRoles, UserResponse } from '../types/user.types.js';
 import { UserInterface } from './user.interface.js';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class UserService {
     private readonly userInterface: UserInterface,
   ) {}
 
-  async updateUserRole(id: string, role: Role) {
+  async updateUserRole(id: string, role: UserRoles) {
     if (!role) {
       throw new Error('Invalid fields');
     }
