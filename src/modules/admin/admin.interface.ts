@@ -1,4 +1,4 @@
-import { AdminResponse, AdminRoles } from '../types/admin.types.js';
+import { AdminResponse, AdminRoles } from '../../common/types/admin.types.js';
 
 export abstract class AdminInterface {
   abstract updateAdminRole(

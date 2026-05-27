@@ -8,12 +8,15 @@ import {
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
-import { AuthGuard } from '../guards/auth.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
 import { AdminService } from './admin.service.js';
-import { CurrentUser } from '../decorators/user.decorator.js';
-import { Roles } from '../decorators/role.decorator.js';
-import { RolesGuard } from '../guards/role.guard.js';
-import type { AdminRoles, AdminResponse } from '../types/admin.types.js';
+import { CurrentUser } from '../../common/decorators/user.decorator.js';
+import { Roles } from '../../common/decorators/role.decorator.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
+import type {
+  AdminRoles,
+  AdminResponse,
+} from '../../common/types/admin.types.js';
 
 @Controller('admin')
 @UseGuards(AuthGuard, RolesGuard)

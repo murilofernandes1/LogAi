@@ -1,5 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import type { AdminRoles, AdminResponse } from '../types/admin.types.js';
+import type {
+  AdminRoles,
+  AdminResponse,
+} from '../../common/types/admin.types.js';
 import { AdminInterface } from './admin.interface.js';
 
 @Injectable()

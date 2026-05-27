@@ -3,15 +3,16 @@ import {
   Inject,
   BadRequestException,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
-import { RouteInterface } from '../modules/route/route.interface.js';
+import { RouteInterface } from './route.interface.js';
 import {
   AssignRoute,
   RouteDTO,
   RouteResponse,
   UpdateStatus,
-} from '../common/types/route.types.js';
-import { DriverInterface } from '../modules/driver/driver.interface.js';
+} from '../types/route.types.js';
+import { DriverInterface } from '../driver/driver.interface.js';
 @Injectable()
 export class RouteService {
   constructor(

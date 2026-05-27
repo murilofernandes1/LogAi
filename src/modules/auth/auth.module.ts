@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthRepository } from '../modules/auth/auth.repository.js';
-import { AuthController } from '../modules/auth/auth.controller.js';
-import { AuthService } from '../modules/auth/auth.service.js';
-import { jwtConstants } from '../common/constants/jwt.contants.js';
-import { CryptoModule } from '../common/core/crypto/crypto.module.js';
-import { DriverModule } from '../modules/driver/driver.module.js';
+import { AuthRepository } from './auth.repository.js';
+import { AuthController } from './auth.controller.js';
+import { AuthService } from './auth.service.js';
+import { jwtConstants } from '../constants/jwt.contants.js';
+import { CryptoModule } from '../core/crypto/crypto.module.js';
+import { DriverModule } from '../driver/driver.module.js';
 
 @Module({
   imports: [

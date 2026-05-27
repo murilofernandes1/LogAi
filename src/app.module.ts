@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module.js';
-import { PrismaService } from './core/prisma/prisma.service.js';
-import { PrismaModule } from './core/prisma/prisma.module.js';
-import { AdminModule } from './admin/admin.module.js';
-import { DriverModule } from './driver/driver.module.js';
-import { RouteModule } from './route/route.module.js';
-import { DeliveryModule } from './delivery/delivery.module.js';
+import { PrismaService } from './common/core/prisma/prisma.service.js';
+import { PrismaModule } from './common/core/prisma/prisma.module.js';
+import { AdminModule } from './modules/admin/admin.module.js';
+import { DriverModule } from './modules/driver/driver.module.js';
+import { RouteModule } from './modules/route/route.module.js';
+import { DeliveryModule } from './modules/delivery/delivery.module.js';
 
 @Module({
   imports: [
