@@ -4,8 +4,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthRepository } from './auth.repository.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
-import { jwtConstants } from '../constants/jwt.contants.js';
-import { CryptoModule } from '../core/crypto/crypto.module.js';
+import { jwtConstants } from '../../common/constants/jwt.contants.js';
+import { CryptoModule } from '../../common/core/crypto/crypto.module.js';
 import { DriverModule } from '../driver/driver.module.js';
 
 @Module({

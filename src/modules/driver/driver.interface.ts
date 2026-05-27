@@ -1,4 +1,4 @@
-import { DriverDTO, DriverResponse } from '../types/driver.types.js';
+import { DriverDTO, DriverResponse } from '../../common/types/driver.types.js';
 
 export abstract class DriverInterface {
   abstract create(data: DriverDTO): Promise<DriverDTO>;

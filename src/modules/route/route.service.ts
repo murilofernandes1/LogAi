@@ -9,9 +9,8 @@ import { RouteInterface } from './route.interface.js';
 import {
   AssignRoute,
   RouteDTO,
-  RouteResponse,
   UpdateStatus,
-} from '../types/route.types.js';
+} from '../../common/types/route.types.js';
 import { DriverInterface } from '../driver/driver.interface.js';
 @Injectable()
 export class RouteService {

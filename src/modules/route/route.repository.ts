@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { RouteInterface } from './route.interface.js';
-import { PrismaService } from '../core/prisma/prisma.service.js';
+import { PrismaService } from '../../common/core/prisma/prisma.service.js';
 import {
   AssignRoute,
   RouteDTO,
   RouteResponse,
   UpdateStatus,
-} from '../types/route.types.js';
+} from '../../common/types/route.types.js';
 
 @Injectable()
 export class RouteRepository implements RouteInterface {

@@ -8,24 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from '../guards/auth.guard.js';
-import { RolesGuard } from '../guards/role.guard.js';
-import { TypeGuard } from '../guards/type.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
+import { TypeGuard } from '../../common/guards/type.guard.js';
 import { RouteService } from './route.service.js';
-import type {
-  AssignRoute,
-  RouteDTO,
-  Status,
-  UpdateStatus,
-} from '../types/route.types.js';
-import { Types } from '../decorators/type.decorator.js';
+import type { AssignRoute, RouteDTO } from '../../common/types/route.types.js';
 
 @Controller('routes')
 @UseGuards(AuthGuard, RolesGuard, TypeGuard)
 export class RouteController {
   constructor(private routeService: RouteService) {}
-
-  // USER / ADMIN ROUTES
 
   @Post('create')
   async create(@Body() body: RouteDTO) {

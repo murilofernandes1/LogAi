@@ -3,8 +3,8 @@ import { AdminController } from './admin.controller.js';
 import { AdminRepository } from './admin.repository.js';
 import { AdminService } from './admin.service.js';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from '../../guards/role.guard.js';
-import { AuthGuard } from '../../guards/auth.guard.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
 
 @Module({
   providers: [

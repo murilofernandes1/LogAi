@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Admin } from '../types/admin.types.js';
-import { TYPES_KEY } from '../common/decorators/type.decorator.js';
+import { TYPES_KEY } from '../decorators/type.decorator.js';
 
 @Injectable()
 export class TypeGuard implements CanActivate {

@@ -4,9 +4,9 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CryptoInterface } from '../core/crypto/crypto.interface.js';
+import { CryptoInterface } from '../../common/core/crypto/crypto.interface.js';
 import { DriverInterface } from './driver.interface.js';
-import { DriverDTO } from '../types/driver.types.js';
+import { DriverDTO } from '../../common/types/driver.types.js';
 
 @Injectable()
 export class DriverService {

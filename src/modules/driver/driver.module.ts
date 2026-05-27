@@ -3,9 +3,9 @@ import { DriverService } from './driver.service.js';
 import { DriverRepository } from './driver.repository.js';
 import { DriverController } from './driver.controller.js';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from '../guards/role.guard.js';
-import { AuthGuard } from '../guards/auth.guard.js';
-import { CryptoModule } from '../core/crypto/crypto.module.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
+import { CryptoModule } from '../../common/core/crypto/crypto.module.js';
 import { RouteModule } from '../route/route.module.js';
 
 @Module({

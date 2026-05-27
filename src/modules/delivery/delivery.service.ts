@@ -11,8 +11,8 @@ import {
   UpdateDeliveryStatus,
   DeliveryStatus,
   UpdateDeliveryDTO,
-} from '../types/delivery.types.js';
-import codeGen from '../utils/codeGen.js';
+} from '../../common/types/delivery.types.js';
+import codeGen from '../../common/utils/codeGen.js';
 
 @Injectable()
 export class DeliveryService {

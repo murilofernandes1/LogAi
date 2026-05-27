@@ -3,8 +3,8 @@ import { DeliveryController } from './delivery.controller.js';
 import { DeliveryService } from './delivery.service.js';
 import { DeliveryRepository } from './delivery.repository.js';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from '../guards/auth.guard.js';
-import { RolesGuard } from '../guards/role.guard.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
 
 @Module({
   imports: [],

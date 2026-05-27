@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { DeliveryInterface } from './delivery.interface.js';
-import { PrismaService } from '../core/prisma/prisma.service.js';
+import { PrismaService } from '../../common/core/prisma/prisma.service.js';
 import {
   DeliveryDTO,
   DeliveryResponse,
   UpdateDeliveryDTO,
   UpdateDeliveryStatus,
-} from '../types/delivery.types.js';
+} from '../../common/types/delivery.types.js';
 
 @Injectable()
 export class DeliveryRepository implements DeliveryInterface {

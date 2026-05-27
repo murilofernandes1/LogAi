@@ -4,7 +4,7 @@ import {
   DeliveryResponse,
   UpdateDeliveryDTO,
   UpdateDeliveryStatus,
-} from '../types/delivery.types.js';
+} from '../../common/types/delivery.types.js';
 
 export abstract class DeliveryInterface {
   abstract createDelivery(data: DeliveryDTO): Promise<DeliveryResponse>;

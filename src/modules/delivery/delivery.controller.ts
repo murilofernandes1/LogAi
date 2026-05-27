@@ -8,15 +8,15 @@ import {
   Delete,
   Param,
 } from '@nestjs/common';
-import { AuthGuard } from '../guards/auth.guard.js';
-import { RolesGuard } from '../guards/role.guard.js';
-import { TypeGuard } from '../guards/type.guard.js';
-import { Roles } from '../decorators/role.decorator.js';
+import { AuthGuard } from '../../common/guards/auth.guard.js';
+import { RolesGuard } from '../../common/guards/role.guard.js';
+import { TypeGuard } from '../../common/guards/type.guard.js';
+import { Roles } from '../../common/decorators/role.decorator.js';
 import type {
   DeliveryDTO,
   DeliveryStatus,
   UpdateDeliveryDTO,
-} from '../types/delivery.types.js';
+} from '../../common/types/delivery.types.js';
 import { DeliveryService } from './delivery.service.js';
 
 @Controller('deliveries')

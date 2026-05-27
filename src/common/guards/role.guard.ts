@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../common/decorators/role.decorator.js';
+import { ROLES_KEY } from '../decorators/role.decorator.js';
 import type { Admin } from '../types/admin.types.js';
 import { AdminRoles } from '../types/admin.types.js';
 

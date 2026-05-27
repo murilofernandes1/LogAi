@@ -5,11 +5,10 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SignInDTO, SignUpDTO } from '../types/auth.types.js';
+import { SignInDTO, SignUpDTO } from '../../common/types/auth.types.js';
 import { JwtService } from '@nestjs/jwt';
 import { AuthInterface } from './auth.interface.js';
-import { CryptoInterface } from '../core/crypto/crypto.interface.js';
-import { compare } from 'bcrypt';
+import { CryptoInterface } from '../../common/core/crypto/crypto.interface.js';
 import { DriverInterface } from '../driver/driver.interface.js';
 
 @Injectable()

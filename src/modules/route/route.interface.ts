@@ -1,10 +1,9 @@
-import { Status } from '../types/driver.types.js';
 import {
   AssignRoute,
   RouteDTO,
   RouteResponse,
   UpdateStatus,
-} from '../types/route.types.js';
+} from '../../common/types/route.types.js';
 
 export abstract class RouteInterface {
   abstract create(data?: RouteDTO): Promise<RouteResponse>;
