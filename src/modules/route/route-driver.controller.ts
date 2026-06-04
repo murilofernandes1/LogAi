@@ -14,10 +14,12 @@ import { RouteService } from './route.service.js';
 import { CurrentUser } from '../../common/decorators/user.decorator.js';
 import { UpdateStatus } from '../../common/types/route.types.js';
 import { Types } from '../../common/decorators/type.decorator.js';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('driver/routes')
 @UseGuards(AuthGuard, TypeGuard)
 @UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Types('DRIVER')
 export class RouteDriverController {
   constructor(private routeService: RouteService) {}

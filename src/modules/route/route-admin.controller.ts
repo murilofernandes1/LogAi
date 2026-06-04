@@ -13,10 +13,13 @@ import { TypeGuard } from '../../common/guards/type.guard.js';
 import { RouteService } from './route.service.js';
 import type { AssignRoute, RouteDTO } from '../../common/types/route.types.js';
 import { Types } from '../../common/decorators/type.decorator.js';
+import { AssignDeliveries } from '../../common/types/delivery.types.js';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('admin/routes')
 @UseGuards(AuthGuard, TypeGuard)
 @UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Types('USER')
 export class RouteAdminController {
   constructor(private routeService: RouteService) {}
@@ -42,6 +45,17 @@ export class RouteAdminController {
     @Body() body: { driverId: AssignRoute['driverId'] },
   ) {
     return this.routeService.assignRoute({ id, driverId: body.driverId });
+  }
+
+  @Patch('/:id/deliveries')
+  async assignDeliveriesToRoute(
+    @Param('id') id: AssignDeliveries['routeId'],
+    @Body() body: { deliveries: AssignDeliveries['deliveries'] },
+  ) {
+    return this.routeService.assignDeliveriesToRoute({
+      routeId: id,
+      deliveries: body.deliveries,
+    });
   }
 
   @Delete('/:id')

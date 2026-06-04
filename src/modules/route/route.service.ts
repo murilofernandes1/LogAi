@@ -12,6 +12,8 @@ import {
   UpdateStatus,
 } from '../../common/types/route.types.js';
 import { DriverInterface } from '../driver/driver.interface.js';
+import { AssignDeliveries } from '../../common/types/delivery.types.js';
+import { DeliveryInterface } from '../delivery/delivery.interface.js';
 @Injectable()
 export class RouteService {
   constructor(
@@ -19,6 +21,8 @@ export class RouteService {
     private readonly routeInterface: RouteInterface,
     @Inject('IDriverRepository')
     private readonly driverInterface: DriverInterface,
+    @Inject('DeliveryRepository')
+    private readonly deliveryInterface: DeliveryInterface,
   ) {}
 
   async create(data: RouteDTO) {
@@ -58,7 +62,7 @@ export class RouteService {
       throw new NotFoundException('Route not found.');
     }
 
-    if (String(route?.status) === String(data.status)) {
+    if (!route.canUpdateStatus(data.status)) {
       throw new BadRequestException(
         'It is not possible to repeat the same status.',
       );
@@ -70,7 +74,10 @@ export class RouteService {
   async deleteRoute(id: string) {
     const route = await this.routeInterface.seeRoute(id);
     if (!route) {
-      throw new NotFoundException('Route not found');
+      throw new NotFoundException('Route not found.');
+    }
+    if (!route.canCancelRoute()) {
+      throw new BadRequestException();
     }
     await this.routeInterface.deleteRoute(id);
     return {};
@@ -97,5 +104,24 @@ export class RouteService {
     }
 
     return myRoutes;
+  }
+
+  async assignDeliveriesToRoute(data: AssignDeliveries) {
+    const route = await this.routeInterface.seeRoute(data.routeId);
+    if (!route) {
+      throw new NotFoundException('Route not found.');
+    }
+
+    if (!data.deliveriesId || data.deliveriesId.length === 0) {
+      throw new BadRequestException('Select at least 1 delivery.');
+    }
+
+    if (!route.canReceiveDeliveries()) {
+      throw new BadRequestException(
+        'This route cannot receive new deliveries in its current status.',
+      );
+    }
+
+    return await this.deliveryInterface.assignToRoute(data);
   }
 }

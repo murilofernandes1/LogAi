@@ -1,4 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEnum } from 'class-validator';
+
+export enum DeliveryStatus {
+  PENDING = 'PENDING',
+  IN_ROUTE = 'IN_ROUTE',
+  DELIVERED = 'DELIVERED',
+  REFUSED = 'REFUSED',
+}
+
 export class DeliveryDTO {
   @ApiProperty({ example: 'Nome do destinatário' })
   recipientName: string;
@@ -13,7 +22,10 @@ export class DeliveryDTO {
   @ApiProperty({ example: '1.5' })
   weight: number;
   code: string;
-  status: string;
+  @IsEnum(DeliveryStatus, {
+    message: '',
+  })
+  status: DeliveryStatus;
   routeId: string | null;
 }
 
@@ -27,11 +39,16 @@ export class DeliveryResponse {
   weight: number;
   code: string;
   routeId: string | null;
-  status: string;
+  status: DeliveryStatus;
   createdAt: Date;
   updatedAt: Date;
 
   deliveryHistory?: [];
+}
+
+export class AssignDeliveries {
+  routeId: string;
+  deliveriesId: string[];
 }
 
 export class UpdateDeliveryStatus {
@@ -39,7 +56,5 @@ export class UpdateDeliveryStatus {
   status: DeliveryStatus;
 }
 export type UpdateDeliveryDTO = Partial<DeliveryDTO>;
-
-export type DeliveryStatus = 'PENDING' | 'IN_ROUTE' | 'DELIVERED' | 'REFUSED';
 
 export type CreateDelivery = Omit<DeliveryDTO, 'id' | 'code'>;

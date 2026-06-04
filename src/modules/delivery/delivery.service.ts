@@ -45,10 +45,6 @@ export class DeliveryService {
   async seeDeliveries() {
     const deliveries = await this.deliveryInterface.seeDeliveries();
 
-    if (!deliveries) {
-      return {};
-    }
-
     return deliveries;
   }
 
@@ -62,19 +58,13 @@ export class DeliveryService {
   }
 
   async updateDeliveryStatus(data: UpdateDeliveryStatus) {
-    const status = ['PENDING', 'IN_ROUTE', 'DELIVERED'];
-
-    if (!status.includes(data.status)) {
-      throw new BadRequestException('Invalid status.');
-    }
-
     const delivery = await this.deliveryInterface.seeDelivery(data.id);
 
     if (!delivery) {
       throw new NotFoundException('Delivery not found');
     }
 
-    if (delivery.status === data.status) {
+    if (delivery.canUpdateDeliveryStatus(data.status)) {
       throw new BadRequestException(
         'It is not possible to repeat the same status.',
       );
@@ -93,9 +83,7 @@ export class DeliveryService {
       id,
       data,
     );
-    if (!updatedDelivery) {
-      throw new BadRequestException('Invalid data.');
-    }
+
     return updatedDelivery;
   }
 
@@ -106,8 +94,8 @@ export class DeliveryService {
       throw new NotFoundException('Delivery not found.');
     }
 
-    await this.deliveryInterface.cancelDelivery(id);
+    const deleted = await this.deliveryInterface.cancelDelivery(id);
 
-    return {};
+    return deleted;
   }
 }

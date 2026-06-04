@@ -6,9 +6,14 @@ export class AssignRoute {
   driverId: string;
   id: string;
 }
-
+export enum RouteStatus {
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  CANCELED = 'CANCELED',
+}
 export class UpdateStatus {
-  status: Status;
+  status: RouteStatus;
   routeId: string;
 }
 
@@ -19,5 +24,3 @@ export class RouteResponse {
   createdAt: Date;
   deliveries?: [];
 }
-
-export type Status = 'OPEN' | 'IN_PROGRESS' | 'CLOSED' | 'CANCELLED';
