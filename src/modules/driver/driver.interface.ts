@@ -1,8 +1,9 @@
-import { DriverDTO, DriverResponse } from '../../common/types/driver.types.js';
+import { Driver } from './driver.entity.js';
+import { DriverDTO } from '../../common/types/driver.types.js';
 
 export abstract class DriverInterface {
-  abstract create(data: DriverDTO): Promise<DriverDTO>;
-  abstract seeDriver(id: string): Promise<DriverResponse | null>;
-  abstract allDrivers(): Promise<DriverResponse[] | null>;
-  abstract findDriverByEmail(email: string): Promise<DriverResponse | null>;
+  abstract create(data: DriverDTO): Promise<Driver>;
+  abstract seeDriver(id: string): Promise<Driver | null>;
+  abstract allDrivers(): Promise<Driver[] | null>;
+  abstract findDriverByEmail(email: string): Promise<Driver | null>;
 }

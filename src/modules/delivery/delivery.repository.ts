@@ -15,10 +15,7 @@ import { Delivery } from './delivery.entity.js';
 export class DeliveryRepository implements DeliveryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createDelivery(data: DeliveryDTO): Promise<Delivery> {
-    const raw = await this.prisma.delivery.create({
-      data: data,
-    });
+  private toDomain(raw: any): Delivery {
     return new Delivery(
       raw.id,
       raw.recipientName,
@@ -33,6 +30,13 @@ export class DeliveryRepository implements DeliveryInterface {
       raw.createdAt,
       raw.updatedAt,
     );
+  }
+
+  async createDelivery(data: DeliveryDTO): Promise<Delivery> {
+    const raw = await this.prisma.delivery.create({
+      data: data,
+    });
+    return this.toDomain(raw);
   }
 
   async cancelDelivery(id: string): Promise<{}> {
@@ -55,20 +59,7 @@ export class DeliveryRepository implements DeliveryInterface {
         ...data,
       },
     });
-    return new Delivery(
-      raw.id,
-      raw.recipientName,
-      raw.recipientPhone,
-      raw.address,
-      raw.city,
-      raw.zipCode,
-      raw.weight,
-      raw.code,
-      raw.routeId,
-      raw.status as DeliveryStatus,
-      raw.createdAt,
-      raw.updatedAt,
-    );
+    return this.toDomain(raw);
   }
   async updateDeliveryStatus(data: UpdateDeliveryStatus): Promise<Delivery> {
     const raw = await this.prisma.delivery.update({
@@ -79,41 +70,12 @@ export class DeliveryRepository implements DeliveryInterface {
         status: data.status,
       },
     });
-    return new Delivery(
-      raw.id,
-      raw.recipientName,
-      raw.recipientPhone,
-      raw.address,
-      raw.city,
-      raw.zipCode,
-      raw.weight,
-      raw.code,
-      raw.routeId,
-      raw.status as DeliveryStatus,
-      raw.createdAt,
-      raw.updatedAt,
-    );
+    return this.toDomain(raw);
   }
 
   async seeDeliveries(): Promise<Delivery[]> {
     const raw = await this.prisma.delivery.findMany();
-    return raw.map(
-      (r) =>
-        new Delivery(
-          r.id,
-          r.recipientName,
-          r.recipientPhone,
-          r.address,
-          r.city,
-          r.zipCode,
-          r.weight,
-          r.code,
-          r.routeId,
-          r.status as DeliveryStatus,
-          r.createdAt,
-          r.updatedAt,
-        ),
-    );
+    return raw.map((r) => this.toDomain(r));
   }
 
   async seeDelivery(id: string): Promise<Delivery | null> {
@@ -123,20 +85,7 @@ export class DeliveryRepository implements DeliveryInterface {
       },
     });
     if (!raw) return null;
-    return new Delivery(
-      raw.id,
-      raw.recipientName,
-      raw.recipientPhone,
-      raw.address,
-      raw.city,
-      raw.zipCode,
-      raw.weight,
-      raw.code,
-      raw.routeId,
-      raw.status as DeliveryStatus,
-      raw.createdAt,
-      raw.updatedAt,
-    );
+    return this.toDomain(raw);
   }
   async seeDeliveryByCode(code: string): Promise<Delivery | null> {
     const raw = await this.prisma.delivery.findUnique({
@@ -146,40 +95,24 @@ export class DeliveryRepository implements DeliveryInterface {
     });
     if (!raw) return null;
 
-    return new Delivery(
-      raw.id,
-      raw.recipientName,
-      raw.recipientPhone,
-      raw.address,
-      raw.city,
-      raw.zipCode,
-      raw.weight,
-      raw.code,
-      raw.routeId,
-      raw.status as DeliveryStatus,
-      raw.createdAt,
-      raw.updatedAt,
-    );
+    return this.toDomain(raw);
   }
-  async assignToRoute(data: AssignDeliveries): Promise<Delivery> {
-    const rows = await this.prisma.delivery.update({
-      where: { id: data.deliveryId },
-      data: { routeId: data.routeId },
+  async assignToRoute(data: AssignDeliveries): Promise<Delivery[]> {
+    await this.prisma.delivery.updateMany({
+      where: {
+        id: { in: data.deliveriesId },
+      },
+      data: {
+        routeId: data.routeId,
+      },
     });
 
-    return new Delivery(
-      rows.id,
-      rows.recipientName,
-      rows.recipientPhone,
-      rows.address,
-      rows.city,
-      rows.zipCode,
-      rows.weight,
-      rows.code,
-      rows.routeId,
-      rows.status as DeliveryStatus,
-      rows.createdAt,
-      rows.updatedAt,
-    );
+    const rows = await this.prisma.delivery.findMany({
+      where: {
+        id: { in: data.deliveriesId },
+      },
+    });
+
+    return rows.map((r) => this.toDomain(r));
   }
 }

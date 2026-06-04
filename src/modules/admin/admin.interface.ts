@@ -1,5 +1,5 @@
-import { AdminResponse } from '../../common/types/admin.types.js';
+import { Admin } from './admin.entity.js';
 
 export abstract class AdminInterface {
-  abstract getMe(id: string): Promise<AdminResponse>;
+  abstract getMe(id: string): Promise<Admin>;
 }

@@ -2,13 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../common/core/prisma/prisma.service.js';
 import type { AdminResponse } from '../../common/types/admin.types.js';
 import { AdminInterface } from './admin.interface.js';
+import { Admin } from './admin.entity.js';
 
 @Injectable()
 export class AdminRepository implements AdminInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getMe(id: string): Promise<AdminResponse> {
-    const user = await this.prisma.user.findUnique({
+  private toDomain(raw: any) {
+    return new Admin(raw.id, raw.name, raw.email);
+  }
+
+  async getMe(id: string): Promise<Admin> {
+    const raw = await this.prisma.user.findUnique({
       where: { id },
       select: {
         id: true,
@@ -17,6 +22,6 @@ export class AdminRepository implements AdminInterface {
       },
     });
 
-    return user as unknown as AdminResponse;
+    return this.toDomain(raw);
   }
 }

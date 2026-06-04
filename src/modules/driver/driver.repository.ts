@@ -5,32 +5,59 @@ import type {
   DriverResponse,
 } from '../../common/types/driver.types.js';
 import { DriverInterface } from './driver.interface.js';
+import { Driver } from './driver.entity.js';
 
 @Injectable()
 export class DriverRepository implements DriverInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: DriverDTO) {
-    return this.prisma.driver.create({ data });
+  private toDomain(raw: any): Driver {
+    return new Driver(
+      raw.id,
+      raw.name,
+      raw.email,
+      raw.password,
+      raw.licensePlate,
+      raw.phone,
+      raw.createdAt,
+      raw.updatedAt,
+    );
   }
 
-  async findDriverByEmail(email: string) {
-    return this.prisma.driver.findUnique({
+  async create(data: DriverDTO): Promise<Driver> {
+    const raw = await this.prisma.driver.create({ data });
+    return this.toDomain(raw);
+  }
+
+  async findDriverByEmail(email: string): Promise<Driver | null> {
+    const raw = await this.prisma.driver.findUnique({
       where: {
         email: email,
       },
     });
+    if (!raw) {
+      return null;
+    }
+    return this.toDomain(raw);
   }
 
-  async seeDriver(id: string) {
-    return this.prisma.driver.findUnique({
+  async seeDriver(id: string): Promise<Driver | null> {
+    const raw = await this.prisma.driver.findUnique({
       where: {
         id: id,
       },
     });
+    if (!raw) {
+      return null;
+    }
+    return this.toDomain(raw);
   }
 
-  async allDrivers(): Promise<DriverResponse[] | null> {
-    return this.prisma.driver.findMany();
+  async allDrivers(): Promise<Driver[] | null> {
+    const raws = await this.prisma.driver.findMany();
+    if (!raws) {
+      return null;
+    }
+    return raws.map((r) => this.toDomain(r));
   }
 }
