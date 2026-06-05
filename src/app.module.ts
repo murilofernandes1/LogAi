@@ -6,6 +6,8 @@ import { AdminModule } from './modules/admin/admin.module.js';
 import { DriverModule } from './modules/driver/driver.module.js';
 import { RouteModule } from './modules/route/route.module.js';
 import { DeliveryModule } from './modules/delivery/delivery.module.js';
+import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
@@ -15,7 +17,9 @@ import { DeliveryModule } from './modules/delivery/delivery.module.js';
     DriverModule,
     RouteModule,
     DeliveryModule,
+    UserModule,
   ],
   providers: [PrismaService],
+  controllers: [UserController],
 })
 export class AppModule {}

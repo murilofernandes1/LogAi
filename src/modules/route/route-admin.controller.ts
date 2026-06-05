@@ -50,11 +50,11 @@ export class RouteAdminController {
   @Patch('/:id/deliveries')
   async assignDeliveriesToRoute(
     @Param('id') id: AssignDeliveries['routeId'],
-    @Body() body: { deliveries: AssignDeliveries['deliveries'] },
+    @Body() body: { deliveries: AssignDeliveries['deliveriesId'] },
   ) {
     return this.routeService.assignDeliveriesToRoute({
       routeId: id,
-      deliveries: body.deliveries,
+      deliveriesId: body.deliveries,
     });
   }
 

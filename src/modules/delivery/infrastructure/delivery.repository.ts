@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DeliveryInterface } from './delivery.interface.js';
-import { PrismaService } from '../../common/core/prisma/prisma.service.js';
+import { DeliveryInterface } from '../domain/delivery.interface.js';
+import { PrismaService } from '../../../common/core/prisma/prisma.service.js';
 import {
   AssignDeliveries,
   DeliveryDTO,
@@ -8,8 +8,8 @@ import {
   DeliveryStatus,
   UpdateDeliveryDTO,
   UpdateDeliveryStatus,
-} from '../../common/types/delivery.types.js';
-import { Delivery } from './delivery.entity.js';
+} from '../../../common/types/delivery.types.js';
+import { Delivery } from '../domain/delivery.entity.js';
 
 @Injectable()
 export class DeliveryRepository implements DeliveryInterface {

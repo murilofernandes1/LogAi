@@ -4,15 +4,15 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DeliveryInterface } from './delivery.interface.js';
+import { DeliveryInterface } from '../domain/delivery.interface.js';
 import {
   CreateDelivery,
   DeliveryDTO,
   UpdateDeliveryStatus,
   DeliveryStatus,
   UpdateDeliveryDTO,
-} from '../../common/types/delivery.types.js';
-import codeGen from '../../common/utils/codeGen.js';
+} from '../../../common/types/delivery.types.js';
+import codeGen from '../../../common/utils/codeGen.js';
 
 @Injectable()
 export class DeliveryService {
@@ -64,7 +64,7 @@ export class DeliveryService {
       throw new NotFoundException('Delivery not found');
     }
 
-    if (delivery.canUpdateDeliveryStatus(data.status)) {
+    if (!delivery.canUpdateDeliveryStatus(data.status)) {
       throw new BadRequestException(
         'It is not possible to repeat the same status.',
       );

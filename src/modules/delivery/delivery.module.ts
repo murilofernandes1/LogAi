@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { DeliveryDriverController } from './delivery-driver.controller.js';
-import { DeliveryAdminController } from './delivery-admin.controller.js';
-import { DeliveryService } from './delivery.service.js';
-import { DeliveryRepository } from './delivery.repository.js';
+import { DeliveryDriverController } from './presentation/delivery-driver.controller.js';
+import { DeliveryAdminController } from './presentation/delivery-admin.controller.js';
+import { DeliveryService } from './application/delivery.service.js';
+import { DeliveryRepository } from './infrastructure/delivery.repository.js';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '../../common/guards/auth.guard.js';
 

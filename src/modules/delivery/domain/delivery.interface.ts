@@ -3,7 +3,7 @@ import {
   DeliveryDTO,
   UpdateDeliveryDTO,
   UpdateDeliveryStatus,
-} from '../../common/types/delivery.types.js';
+} from '../../../common/types/delivery.types.js';
 import { Delivery } from './delivery.entity.js';
 
 export abstract class DeliveryInterface {
@@ -13,7 +13,7 @@ export abstract class DeliveryInterface {
   abstract seeDeliveryByCode(code: string): Promise<Delivery | null>;
   abstract cancelDelivery(id: string): Promise<{}>;
   abstract updateDeliveryStatus(data: UpdateDeliveryStatus): Promise<Delivery>;
-  abstract assignToRoute(data: AssignDeliveries): Promise<Delivery>;
+  abstract assignToRoute(data: AssignDeliveries): Promise<Delivery[]>;
   abstract updateDeliveryFields(
     id: string,
     data: UpdateDeliveryDTO,

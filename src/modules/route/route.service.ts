@@ -13,7 +13,7 @@ import {
 } from '../../common/types/route.types.js';
 import { DriverInterface } from '../driver/driver.interface.js';
 import { AssignDeliveries } from '../../common/types/delivery.types.js';
-import { DeliveryInterface } from '../delivery/delivery.interface.js';
+import { DeliveryInterface } from '../delivery/domain/delivery.interface.js';
 @Injectable()
 export class RouteService {
   constructor(

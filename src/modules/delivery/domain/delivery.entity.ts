@@ -1,7 +1,7 @@
 import {
   AssignDeliveries,
   DeliveryStatus,
-} from '../../common/types/delivery.types.js';
+} from '../../../common/types/delivery.types.js';
 
 export class Delivery {
   constructor(
@@ -19,6 +19,6 @@ export class Delivery {
     public readonly updatedAt: Date,
   ) {}
   canUpdateDeliveryStatus(newStatus: DeliveryStatus): boolean {
-    return this.status === newStatus;
+    return this.status !== newStatus;
   }
 }
