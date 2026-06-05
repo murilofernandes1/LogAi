@@ -48,7 +48,7 @@ export class AuthService {
     return user;
   }
 
-  async signin(signIn: SignInDTO): Promise<{ acessToken: string }> {
+  async signin(signIn: SignInDTO): Promise<{ token: string }> {
     if (!signIn) {
       throw new BadRequestException();
     }
@@ -66,13 +66,13 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    const acessToken = await this.jwtService.signAsync({
+    const token = await this.jwtService.signAsync({
       id: user.id,
       email: user.email,
       name: user.name,
       role: user.role,
     });
 
-    return { acessToken };
+    return { token };
   }
 }
