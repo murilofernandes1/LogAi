@@ -7,9 +7,7 @@ import {
 import { DeliveryInterface } from '../domain/delivery.interface.js';
 import {
   CreateDelivery,
-  DeliveryDTO,
   UpdateDeliveryStatus,
-  DeliveryStatus,
   UpdateDeliveryDTO,
 } from '../../../common/types/delivery.types.js';
 import codeGen from '../../../common/utils/codeGen.js';

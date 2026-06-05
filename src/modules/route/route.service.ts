@@ -3,7 +3,6 @@ import {
   Inject,
   BadRequestException,
   NotFoundException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { RouteInterface } from './route.interface.js';
 import {
@@ -11,7 +10,7 @@ import {
   RouteDTO,
   UpdateStatus,
 } from '../../common/types/route.types.js';
-import { DriverInterface } from '../driver/driver.interface.js';
+import { UserInterface } from '../user/domain/user.interface.js';
 import { AssignDeliveries } from '../../common/types/delivery.types.js';
 import { DeliveryInterface } from '../delivery/domain/delivery.interface.js';
 @Injectable()
@@ -19,9 +18,9 @@ export class RouteService {
   constructor(
     @Inject('IRouteRepository')
     private readonly routeInterface: RouteInterface,
-    @Inject('IDriverRepository')
-    private readonly driverInterface: DriverInterface,
-    @Inject('DeliveryRepository')
+    @Inject('IUserRepository')
+    private readonly userInterface: UserInterface,
+    @Inject('IDeliveryRepository')
     private readonly deliveryInterface: DeliveryInterface,
   ) {}
 
@@ -84,7 +83,7 @@ export class RouteService {
   }
 
   async assignRoute(data: AssignRoute) {
-    const driver = await this.driverInterface.seeDriver(data.driverId);
+    const driver = await this.userInterface.seeDriver(data.driverId);
     if (!driver) {
       throw new NotFoundException('Driver not found');
     }

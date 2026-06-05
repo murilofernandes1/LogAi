@@ -5,18 +5,22 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SignInDTO, SignUpDTO } from '../../common/types/auth.types.js';
+import {
+  SignInDTO,
+  SignUpDTO,
+  UserWithPassword,
+} from '../../../common/types/auth.types.js';
 import { JwtService } from '@nestjs/jwt';
-import { AuthInterface } from './auth.interface.js';
-import { CryptoInterface } from '../../common/core/crypto/crypto.interface.js';
+import { UserInterface } from '../../user/domain/user.interface.js';
+import { CryptoInterface } from '../../../common/core/crypto/crypto.interface.js';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
 
-    @Inject('IAuthRepository')
-    private readonly authInterface: AuthInterface,
+    @Inject('IUserRepository')
+    private readonly userInterface: UserInterface,
 
     private readonly cryptoInterface: CryptoInterface,
   ) {}
@@ -25,7 +29,7 @@ export class AuthService {
     if (!signUp) {
       throw new BadRequestException();
     }
-    const adminAlreadyExists = await this.authInterface.findByEmail(
+    const adminAlreadyExists = await this.userInterface.findByEmail(
       signUp.email,
     );
 
@@ -35,7 +39,7 @@ export class AuthService {
 
     const hashPassword = await this.cryptoInterface.hash(signUp.password);
 
-    const user = await this.authInterface.create({
+    const user = await this.userInterface.create({
       name: signUp.name,
       email: signUp.email,
       password: hashPassword,
@@ -44,31 +48,31 @@ export class AuthService {
     return user;
   }
 
-  async signin(signIn: SignInDTO) {
+  async signin(signIn: SignInDTO): Promise<{ acessToken: string }> {
     if (!signIn) {
       throw new BadRequestException();
     }
-    const user = await this.authInterface.findByEmail(signIn.email);
+    const user = await this.userInterface.findByEmailWithPassword(signIn.email);
 
     if (!user) {
-      throw new NotFoundException('Admin not found.');
+      throw new NotFoundException('Invalid credentials.');
     }
 
     const isPasswordMatch = await this.cryptoInterface.compare(
       signIn.password,
-      user.passwordHash,
+      user.password,
     );
     if (!isPasswordMatch) {
-      throw new UnauthorizedException('Invalid password.');
+      throw new UnauthorizedException('Invalid credentials.');
     }
 
     const acessToken = await this.jwtService.signAsync({
-      id: user.user.id,
-      email: user.user.email,
-      name: user.user.name,
-      role: user.user.role,
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
     });
 
-    return acessToken;
+    return { acessToken };
   }
 }

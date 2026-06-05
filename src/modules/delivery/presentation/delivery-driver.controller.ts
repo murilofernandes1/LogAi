@@ -9,13 +9,13 @@ import {
   Param,
 } from '@nestjs/common';
 import { AuthGuard } from '../../../common/guards/auth.guard.js';
-import { TypeGuard } from '../../../common/guards/type.guard.js';
+import { RoleGuard } from '../../../common/guards/role.guard.js';
 import type { DeliveryStatus } from '../../../common/types/delivery.types.js';
 import { DeliveryService } from '../application/delivery.service.js';
 import { Types } from '../../../common/decorators/type.decorator.js';
 
 @Controller('deliveries')
-@UseGuards(AuthGuard, TypeGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @UseGuards(AuthGuard)
 @Types('DRIVER')
 export class DeliveryDriverController {

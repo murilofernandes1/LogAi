@@ -5,9 +5,10 @@ import { RouteService } from './route.service.js';
 import { RouteRepository } from './route.repository.js';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '../../common/guards/auth.guard.js';
-import { DriverModule } from '../driver/driver.module.js';
+import { UserModule } from '../user/user.module.js';
+import { DeliveryModule } from '../delivery/delivery.module.js';
 @Module({
-  imports: [forwardRef(() => DriverModule)], // for circular dependy error
+  imports: [forwardRef(() => UserModule), forwardRef(() => DeliveryModule)], // for circular dependy error
   providers: [
     RouteService,
     {
@@ -18,7 +19,6 @@ import { DriverModule } from '../driver/driver.module.js';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
-    RouteRepository,
   ],
   controllers: [RouteDriverController, RouteAdminController],
   exports: [RouteService, 'IRouteRepository'],

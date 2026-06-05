@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../common/guards/auth.guard.js';
-import { TypeGuard } from '../../common/guards/type.guard.js';
+import { RoleGuard } from '../../common/guards/role.guard.js';
 import { RouteService } from './route.service.js';
 import { CurrentUser } from '../../common/decorators/user.decorator.js';
 import { UpdateStatus } from '../../common/types/route.types.js';
@@ -17,7 +17,7 @@ import { Types } from '../../common/decorators/type.decorator.js';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('driver/routes')
-@UseGuards(AuthGuard, TypeGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
 @Types('DRIVER')

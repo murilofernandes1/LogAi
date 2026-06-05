@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthRepository } from './auth.repository.js';
-import { AuthController } from './auth.controller.js';
-import { AuthService } from './auth.service.js';
+import { AuthController } from './presentation/auth.controller.js';
+import { AuthService } from './application/auth.service.js';
 import { jwtConstants } from '../../common/constants/jwt.contants.js';
 import { CryptoModule } from '../../common/core/crypto/crypto.module.js';
+import { UserModule } from '../user/user.module.js';
 
 @Module({
   imports: [
+    UserModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
@@ -17,12 +18,6 @@ import { CryptoModule } from '../../common/core/crypto/crypto.module.js';
     CryptoModule,
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    {
-      provide: 'IAuthRepository',
-      useClass: AuthRepository,
-    },
-  ],
+  providers: [AuthService],
 })
 export class AuthModule {}

@@ -9,7 +9,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { AuthGuard } from '../../../common/guards/auth.guard.js';
-import { TypeGuard } from '../../../common/guards/type.guard.js';
+import { RoleGuard } from '../../../common/guards/role.guard.js';
 import type {
   DeliveryDTO,
   UpdateDeliveryDTO,
@@ -18,9 +18,9 @@ import { DeliveryService } from '../application/delivery.service.js';
 import { Types } from '../../../common/decorators/type.decorator.js';
 
 @Controller('admin/deliveries')
-@UseGuards(AuthGuard, TypeGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @UseGuards(AuthGuard)
-@Types('USER')
+@Types('ADMIN')
 export class DeliveryAdminController {
   constructor(private deliveryService: DeliveryService) {}
 

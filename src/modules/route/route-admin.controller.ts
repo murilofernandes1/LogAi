@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../common/guards/auth.guard.js';
-import { TypeGuard } from '../../common/guards/type.guard.js';
+import { RoleGuard } from '../../common/guards/role.guard.js';
 import { RouteService } from './route.service.js';
 import type { AssignRoute, RouteDTO } from '../../common/types/route.types.js';
 import { Types } from '../../common/decorators/type.decorator.js';
@@ -17,10 +17,10 @@ import { AssignDeliveries } from '../../common/types/delivery.types.js';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('admin/routes')
-@UseGuards(AuthGuard, TypeGuard)
+@UseGuards(AuthGuard, RoleGuard)
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
-@Types('USER')
+@Types('ADMIN')
 export class RouteAdminController {
   constructor(private routeService: RouteService) {}
 
