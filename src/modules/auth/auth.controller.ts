@@ -17,10 +17,4 @@ export class AuthController {
   async signin(@Body() body: SignInDTO) {
     return this.authService.signin(body);
   }
-
-  @Public()
-  @Post('driver/signin')
-  async driverSignIn(@Body() body: SignInDTO) {
-    return this.authService.driverSignIn(body);
-  }
 }

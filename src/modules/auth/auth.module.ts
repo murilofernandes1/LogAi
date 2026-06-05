@@ -6,7 +6,6 @@ import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { jwtConstants } from '../../common/constants/jwt.contants.js';
 import { CryptoModule } from '../../common/core/crypto/crypto.module.js';
-import { DriverModule } from '../driver/driver.module.js';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import { DriverModule } from '../driver/driver.module.js';
       signOptions: { expiresIn: '1d' },
     }),
     CryptoModule,
-    DriverModule,
   ],
   controllers: [AuthController],
   providers: [

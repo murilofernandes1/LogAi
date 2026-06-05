@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../common/core/prisma/prisma.service.js';
-import type { AdminResponse } from '../../common/types/admin.types.js';
+import type { AdminResponse } from '../../common/types/user.types.js';
 import { AdminInterface } from './admin.interface.js';
 import { Admin } from './admin.entity.js';
 

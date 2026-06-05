@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '../../common/guards/auth.guard.js';
 import { AdminService } from './admin.service.js';
 import { CurrentUser } from '../../common/decorators/user.decorator.js';
-import type { AdminResponse } from '../../common/types/admin.types.js';
+import type { AdminResponse } from '../../common/types/user.types.js';
 
 @Controller('admin')
 @UseGuards(AuthGuard)

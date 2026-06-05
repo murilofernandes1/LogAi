@@ -9,7 +9,6 @@ import { SignInDTO, SignUpDTO } from '../../common/types/auth.types.js';
 import { JwtService } from '@nestjs/jwt';
 import { AuthInterface } from './auth.interface.js';
 import { CryptoInterface } from '../../common/core/crypto/crypto.interface.js';
-import { DriverInterface } from '../driver/driver.interface.js';
 
 @Injectable()
 export class AuthService {
@@ -19,13 +18,9 @@ export class AuthService {
     @Inject('IAuthRepository')
     private readonly authInterface: AuthInterface,
 
-    @Inject('IDriverRepository')
-    private readonly driverInterface: DriverInterface,
-
     private readonly cryptoInterface: CryptoInterface,
   ) {}
 
-  //SIGN-UP SERVICE
   async signup(signUp: SignUpDTO) {
     if (!signUp) {
       throw new BadRequestException();
@@ -44,11 +39,11 @@ export class AuthService {
       name: signUp.name,
       email: signUp.email,
       password: hashPassword,
+      role: signUp.role,
     });
     return user;
   }
 
-  //SIGN-IN SERVICE
   async signin(signIn: SignInDTO) {
     if (!signIn) {
       throw new BadRequestException();
@@ -61,49 +56,17 @@ export class AuthService {
 
     const isPasswordMatch = await this.cryptoInterface.compare(
       signIn.password,
-      user.password,
+      user.passwordHash,
     );
     if (!isPasswordMatch) {
       throw new UnauthorizedException('Invalid password.');
     }
 
     const acessToken = await this.jwtService.signAsync({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      type: 'USER',
-    });
-
-    return acessToken;
-  }
-
-  //DRIVER SIGN-IN
-  async driverSignIn(driverSignIn: SignInDTO) {
-    if (!driverSignIn) {
-      throw new BadRequestException();
-    }
-    const driver = await this.driverInterface.findDriverByEmail(
-      driverSignIn.email,
-    );
-
-    if (!driver) {
-      throw new NotFoundException('User not found.');
-    }
-
-    const isPasswordMatch = await this.cryptoInterface.compare(
-      driverSignIn.password,
-      driver.password,
-    );
-
-    if (!isPasswordMatch) {
-      throw new UnauthorizedException('Invalid password');
-    }
-
-    const acessToken = await this.jwtService.signAsync({
-      id: driver.id,
-      email: driver.email,
-      name: driver.name,
-      type: 'DRIVER',
+      id: user.user.id,
+      email: user.user.email,
+      name: user.user.name,
+      role: user.user.role,
     });
 
     return acessToken;
