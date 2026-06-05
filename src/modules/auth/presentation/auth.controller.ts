@@ -7,6 +7,7 @@ import { Public } from '../../../common/decorators/public.decorator.js';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @Public()
   @Post('signup')
   async signup(@Body() body: SignUpDTO) {
     return this.authService.signup(body);

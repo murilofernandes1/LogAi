@@ -18,9 +18,9 @@ export class UserRepository implements UserInterface {
       raw.name,
       raw.email,
       raw.role,
-      raw.status,
       raw.phone,
       raw.licensePlate,
+      raw.status,
       raw.createdAt,
       raw.updatedAt,
     );
